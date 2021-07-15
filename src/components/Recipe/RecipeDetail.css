@@ -1,0 +1,113 @@
+#Maindiv{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    gap: 25px;
+    color:white;
+    background-image: url("https://www.caterease.com/wp-content/uploads/2019/01/Login-Final-Background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #recipeImage{
+    border: black 1px solid;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+iframe{
+  height: 400px;
+  width: 70%;
+  align-self: center;
+  background-color: black;
+}
+#recipeInstruction{
+  width: 90%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content:start;
+  gap: 100px;
+}
+#Yummilicious{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+  .hide{
+      visibility: hidden;
+  }
+ 
+#BottomBOX{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 30px;
+    margin-left: 20px;
+    gap: 30px;
+}
+
+.headings{
+    font-size: large;
+    font-weight: bold;
+}
+#name{
+    font-weight: bold;
+    font-size: xx-large;
+}
+.space{
+    height: 15px;
+}
+
+a{
+    color: black;
+}
+
+#loveButton{
+    width: 30px;
+    height: 30px;
+    background-image: url("https://www.iconpacks.net/icons/1/free-heart-icon-492-thumb.png");
+    background-size: contain;
+    background-color:white;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+
+}
+#loveButton:hover {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1200px-Heart_coraz%C3%B3n.svg.png");
+  }
+
+.wallpaper:hover {
+    opacity: 1.0;
+  }
+
+.whitefontcolor{
+    color:white;
+}
+
+#recipeDetailBox{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#recipeDetailRightBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:center;
+    gap: 10px;
+    
+}
+
+@media screen and (max-width :  600px) {
+    .recipeGrid{
+    grid-template-columns: 1fr;}
+    #recipeInstruction{
+        flex-direction: column;
+        gap:20px;
+    }
+    iframe{
+        height: 200px;
+    }
+  }
