@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import "./RecipeDetail.css";
+import Axios from "../utils/Axios"
 
 export class RecipeDetail extends Component {
 
@@ -11,7 +12,8 @@ export class RecipeDetail extends Component {
         strMealThumb: "",
         strInstructions: "",
         strYoutube: "",
-
+        idMeal: "",
+        alreadyFavorite: false,
         strIngredient1: "",
         strIngredient2: "",
         strIngredient3: "",
@@ -71,6 +73,7 @@ export class RecipeDetail extends Component {
                     strMeal: result.data.meals[0].strMeal,
                     strMealThumb : result.data.meals[0].strMealThumb,
                     strInstructions :result.data.meals[0].strInstructions,
+                    idMeal :result.data.meals[0].idMeal,
 
 
                     strIngredient1: result.data.meals[0].strIngredient1,
@@ -129,17 +132,40 @@ export class RecipeDetail extends Component {
         }
     };
 
+    loveItemClicked= async () => {
+ 
+        try {
+            let recipeObj = {
+                idMeal: this.state.idMeal,
+                strMealThumb:this.state.strMealThumb,
+                strMeal:this.state.strMeal
+            }
+            let recipeData = await Axios.post("/api/recipe/save-recipe",recipeObj);
+            this.setState({
+                alreadyFavorite:true
+            })
+
+            
+        } catch (e) {
+            console.log(e);
+        }
+    };
+     
     render() {
         return (
             <div id="Maindiv" className=".whitefontcolor">
                 <div id="TopBOX">
                     <div id="recipeDetailBox">
                         <div id="recipeDetailLeftBox">
-                            <div><img id="recipeImage" src={this.state.strMealThumb} alt={this.state.strMeal}/></div>
+                            <div><img id="recipeImage" src={this.state.strMealThumb} alt={this.state.strMeal}
+                            /></div>
                             </div>
                             <div id="recipeDetailRightBox">
                                 <div>{this.state.strMeal}</div>
-                                <button id="loveButton"></button>
+                                <button id="loveButton" type="submit" onClick={this.loveItemClicked} 
+                                style={{
+                                    backgroundColor: `${this.state.alreadyFavorite ? "red" : ""}`}}>
+                                    </button>
                             </div>
                         </div>
                     </div>
