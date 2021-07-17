@@ -3,6 +3,8 @@ import "./Home.css"
 import BackgroundImagesDisplay from "./BackgroundImagesDisplay"
 import axios from "axios";
 import RecipeList from "../Recipe/RecipeList"
+import checkIfUserIsAuth from "../utils/checkAuth";
+import Axios from "../utils/Axios"
 
 export class Home extends Component {
     state = {
@@ -63,20 +65,31 @@ export class Home extends Component {
         }
     };
 
-    savedItemClicked= async (recipeName) => {
+    savedItemClicked= async () => {
  
         try {
-            let recipeData = await axios.get("");
-            return recipeData;
+            let recipeData = await Axios.get("/api/recipe/get-all-recipes");
+            console.log(recipeData)
+            this.setState({
+                searchModeOn:true,
+                recipeArray: recipeData.data.recipes
+            });
         } catch (e) {
-            return e;
+            console.log(e);
         }
     };
+    
+    
+
 
     render() {
         return (
             <div>
-                <div className="recipeGrid" >
+                <div className = {`secondNav" ${checkIfUserIsAuth()} ? "hide" : "" `}>
+                <button type="submit" onClick={this.savedItemClicked}>
+                {"Saved Recipes"}</button>
+                </div>
+                <div className="recipeGrid" > 
                     {this.state.BackgroundImages.map((item, index) => {
                         return <BackgroundImagesDisplay
                             key={item.id} 
@@ -110,6 +123,7 @@ export class Home extends Component {
                         </div>
                     </div>
                 </div>
+                <div className={` whitefontcolor ${this.state.searchModeOn ? "" : "hide"}`}> {this.state.strMeasure20}{"Recipe Searched"}</div>
                 <div className="recipesGrid">
                             {this.state.recipeArray.map((item) => {
                                 return (
