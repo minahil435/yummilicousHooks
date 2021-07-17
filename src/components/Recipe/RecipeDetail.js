@@ -58,8 +58,24 @@ export class RecipeDetail extends Component {
 
     async componentDidMount() {
         this.fetchRecipe();
-    }
+        this.checkRecipeStatus();
 
+    }
+    checkRecipeStatus= async () => {
+        try {
+            let recipeObj = {
+                idMeal: this.state.idMeal
+            }
+            let liked = await Axios.get("/api/recipe/already-liked-Recipe",recipeObj);
+            console.log(liked)
+            this.setState({
+                alreadyFavorite:liked
+            })            
+        } catch (e) {
+            console.log(e);
+        }
+    };
+    
     fetchRecipe = async () => {
         try {
             let result = await axios.get(

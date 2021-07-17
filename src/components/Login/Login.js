@@ -125,15 +125,16 @@ export class Login extends Component {
 
       this.props.handleUserLogin(decodedToken);
       window.localStorage.setItem("jwtToken", jwtToken);
-      toast.success("Login success!");
+      // toast.success("Login success!");
 
       this.props.history.push("/");
     } catch (e) {
-      if (e.response.status === 429) {
-        toast.error(e.response.data);
-      } else {
-        toast.error(e.response.data.payload);
-      }
+      // if (e.response.status === 429) {
+      //   toast.error(e.response.data);
+      // } else {
+        // toast.error(e.response.data.payload);
+     // }
+     console.log(e)
     }
   };
 
