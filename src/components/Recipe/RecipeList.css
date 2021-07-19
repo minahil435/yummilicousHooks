@@ -1,7 +1,7 @@
 
 .dish{
   height: 350px;
-  width: 350px;
+  width: 400px;
   border: white 1px solid;
   background-color:black;
   display: flex;
@@ -9,6 +9,7 @@
   justify-content:center;
   align-items: center;
   gap : 10px;
+  margin-bottom: 50px;
   }
   .dish:hover {
     transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */

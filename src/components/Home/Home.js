@@ -19,10 +19,10 @@ export class Home extends Component {
             "/images/cover1.jpg",
             "/images/cover2.jpg",
 
-            "/images/cover4.jpg",
-            "/images/cover.jpg",
-            "/images/cover1.jpg",
+            "/images/cover3.jpg",
             "/images/cover2.jpg",
+            "/images/cover1.jpg",
+            "/images/cover.jpg",
         ],
         recipeName: "",
         recipeArray: [],
