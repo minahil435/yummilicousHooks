@@ -18,7 +18,7 @@ export class Home extends Component {
             "/images/cover.jpg",
             "/images/cover1.jpg",
             "/images/cover2.jpg",
-        
+
             "/images/cover4.jpg",
             "/images/cover.jpg",
             "/images/cover1.jpg",
@@ -27,8 +27,25 @@ export class Home extends Component {
         recipeName: "",
         recipeArray: [],
         url: "https://www.themealdb.com/api/json/v1/1/search.php?s=",
-        searchModeOn : false
+        searchModeOn: false,
+        savedItemSearch: false
 
+    }
+
+    async componentDidMount() {
+        let searchedMovieTitle = window.sessionStorage.getItem("searchedrecipeName");
+        if (searchedMovieTitle) {
+            try {
+                let result = await this.handleSearchMovie(searchedMovieTitle);
+                this.setState({
+                    searchModeOn: true,
+                    recipeArray: result.data.meals,
+                    savedItemSearch: false
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
     }
 
     handleOnChange = (event) => {
@@ -38,16 +55,21 @@ export class Home extends Component {
     };
 
     onSubmit = async (event) => {
+
+        let searchedMovieTitle = window.sessionStorage.getItem("searchedrecipeName");
+
+
         if (this.state.recipeName === null || this.state.recipeName === ' ' || this.state.recipeName === '') { }
         else {
             try {
                 let result = await this.handleSearchMovie(this.state.recipeName);
-                
+
                 window.sessionStorage.setItem("searchedrecipeName", this.state.recipeName);
-              
+
                 this.setState({
-                    searchModeOn:true,
+                    searchModeOn: true,
                     recipeArray: result.data.meals,
+                    savedItemSearch: false
                 });
 
             } catch (e) {
@@ -65,45 +87,60 @@ export class Home extends Component {
         }
     };
 
-    savedItemClicked= async () => {
- 
+    savedItemClicked = async () => {
         try {
             let recipeData = await Axios.get("/api/recipe/get-all-recipes");
-            console.log(recipeData)
+
             this.setState({
-                searchModeOn:true,
-                recipeArray: recipeData.data.recipes
+                searchModeOn: true,
+                recipeArray: recipeData.data.recipes,
+                savedItemSearch: true
             });
         } catch (e) {
             console.log(e);
         }
     };
-    
-    
 
+    deleteItemClicked = async (id) => {
+        try {
+            let recipeData = await Axios.delete(`/api/recipe/delete-recipe-by-id/${id}`);
+            let deletedid = (recipeData.data.payload._id).toString()
+
+            let filteredRecipesArray = this.state.recipeArray.filter((item) => {
+                return deletedid !== item._id
+
+            });
+
+            this.setState({
+                recipeArray: filteredRecipesArray
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     render() {
         return (
             <div>
-                <div className = {`secondNav" ${checkIfUserIsAuth()} ? "hide" : "" `}>
-                <button type="submit" onClick={this.savedItemClicked}>
-                {"Saved Recipes"}</button>
+                <div className={`secondNav" ${checkIfUserIsAuth()} ? "hide" : "" `}>
+                    <button type="submit" onClick={this.savedItemClicked}>
+                        {"Saved Recipes"}</button>
                 </div>
-                <div className="recipeGrid" > 
+                <div className="recipeGrid" >
                     {this.state.BackgroundImages.map((item, index) => {
                         return <BackgroundImagesDisplay
-                            key={item.id} 
+                            key={item.id}
                             item={item}
                             index={index}
-                            searchModeOn = {this.state.searchModeOn}
+                            searchModeOn={this.state.searchModeOn}
                         />
                     })
-                  }
+                    }
                 </div>
 
-                <div id='background' 
-                     style={{ top : this.state.searchModeOn ? "50px" : ""}}
-                      >
+                <div id='background'
+                    style={{ top: this.state.searchModeOn ? "50px" : "" }}
+                >
                     <div>
                         <h2 className="whitefontcolor">Find a Recipe</h2>
                     </div>
@@ -125,15 +162,17 @@ export class Home extends Component {
                 </div>
                 <div className={` whitefontcolor ${this.state.searchModeOn ? "" : "hide"}`}> {this.state.strMeasure20}{"Recipe Searched"}</div>
                 <div className="recipesGrid">
-                            {this.state.recipeArray.map((item) => {
-                                return (
-                                    <RecipeList
-                                        key={item.id}
-                                        item={item}
-                                    />
-                                );
-                            })}
-                        </div>
+                    {this.state.recipeArray.map((item) => {
+                        return (
+                            <RecipeList
+                                key={item.id}
+                                item={item}
+                                savedItemSearch={this.state.savedItemSearch}
+                                deleteItemClicked={this.deleteItemClicked}
+                            />
+                        );
+                    })}
+                </div>
             </div>
 
         );

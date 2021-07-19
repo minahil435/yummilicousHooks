@@ -2,21 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./RecipeList.css";
 
-function RecipeList(props) { 
+
+function RecipeList(props) {
     return (
-      <div className = "dish"
-      >
+      <div className = "dish">
         <Link
           to={{
             pathname: `/recipe-detail/${props.item.idMeal}`,
             
           }}>
-          <img className = "dishImage"
+          <div><img className = "dishImage"
           src={props.item.strMealThumb}
-          alt={props.item.strMeal} />
-          <h3 className = "whitefontcolor">{props.item.strMeal}</h3>
-
-        </Link>
+          alt={props.item.strMeal} /></div></Link>
+          <div className = "whitefontcolor">{props.item.strMeal}
+          <button 
+          className={`${props.savedItemSearch ? "" : "hide"}`}
+          onClick={() => props.deleteItemClicked(props.item._id)}
+          >{"delete"}
+           </button></div>
+        {/* </Link> */}
       </div>
     ); 
 }
