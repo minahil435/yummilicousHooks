@@ -78,6 +78,9 @@ export class Home extends Component {
                     searchModeOn: true,
                     recipeArray: result.data.meals,
                     savedItemSearch: false,
+                    page: 0,
+                },()=>{
+                    this.setState({pages: Math.floor(this.state.recipeArray.length / this.state.perPage)})
                 });
 
             } catch (e) {
