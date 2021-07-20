@@ -5,7 +5,6 @@ import Axios from "../utils/Axios"
 import checkIfUserIsAuth from "../utils/checkAuth";
 
 export class RecipeDetail extends Component {
-
     state = {
         strMeal: "",
         strMealThumb: "",
@@ -57,7 +56,7 @@ export class RecipeDetail extends Component {
 
     async componentDidMount() {
         this.fetchRecipe();
-        
+
     }
 
     fetchRecipe = async () => {
@@ -66,10 +65,10 @@ export class RecipeDetail extends Component {
                 `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${this.props.match.params.recipeID}`
             );
 
-            let liked = await Axios.post("/api/recipe/already-liked-Recipe", 
-            {
-                idMeal: this.props.match.params.recipeID
-            });
+            let liked = await Axios.post("/api/recipe/already-liked-Recipe",
+                {
+                    idMeal: this.props.match.params.recipeID
+                });
 
             this.setState(
                 {
@@ -128,11 +127,10 @@ export class RecipeDetail extends Component {
                         {
                             strYoutube: "https://www.youtube.com/embed/" + link
                         },
-                       )
+                    )
                 }
             )
         }
-
         catch (e) {
             console.log(e);
         }
@@ -243,7 +241,6 @@ export class RecipeDetail extends Component {
                     </div>
                 </div>
             </div>
-
         )
     }
 }
