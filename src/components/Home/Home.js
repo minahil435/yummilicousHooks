@@ -5,6 +5,7 @@ import axios from "axios";
 import RecipeList from "../Recipe/RecipeList"
 import checkIfUserIsAuth from "../utils/checkAuth";
 import Axios from "../utils/Axios"
+import ReactPaginate from 'react-paginate';
 
 export class Home extends Component {
     state = {
@@ -28,7 +29,11 @@ export class Home extends Component {
         recipeArray: [],
         url: "https://www.themealdb.com/api/json/v1/1/search.php?s=",
         searchModeOn: false,
-        savedItemSearch: false
+        savedItemSearch: false,
+
+        perPage: 4,
+        page: 0,
+        pages: 0,
 
     }
 
@@ -40,7 +45,10 @@ export class Home extends Component {
                 this.setState({
                     searchModeOn: true,
                     recipeArray: result.data.meals,
-                    savedItemSearch: false
+                    savedItemSearch: false,
+                    page: 0,
+                },()=>{
+                    this.setState({pages: Math.floor(this.state.recipeArray.length / this.state.perPage)})
                 });
             } catch (e) {
                 console.log(e);
@@ -69,7 +77,7 @@ export class Home extends Component {
                 this.setState({
                     searchModeOn: true,
                     recipeArray: result.data.meals,
-                    savedItemSearch: false
+                    savedItemSearch: false,
                 });
 
             } catch (e) {
@@ -77,6 +85,11 @@ export class Home extends Component {
             }
         };
     }
+
+    handlePageClick = (event) => {
+        let page = event.selected;
+        this.setState({page})
+       }
 
     handleSearchMovie = async (recipeName) => {
         try {
@@ -120,6 +133,8 @@ export class Home extends Component {
     };
 
     render() {
+        const {page, perPage, pages, recipeArray} = this.state;
+        let items = recipeArray.slice(page * perPage, (page + 1) * perPage);
         return (
             <div>
                 <div className={`secondNav" ${checkIfUserIsAuth()} ? "hide" : "" `}>
@@ -139,7 +154,7 @@ export class Home extends Component {
                 </div>
 
                 <div id='background'
-                    style={{ top: this.state.searchModeOn ? "50px" : "" }}
+                    style={{ top: this.state.searchModeOn ? "70px" : "" }}
                 >
                     <div>
                         <h2 className="whitefontcolor">Find a Recipe</h2>
@@ -162,7 +177,7 @@ export class Home extends Component {
                 </div>
                 <div className={` whitefontcolor ${this.state.searchModeOn ? "" : "hide"}`}> {this.state.strMeasure20}{"Recipe Searched"}</div>
                 <div className="recipesGrid">
-                    {this.state.recipeArray.map((item) => {
+                    {items.map((item) => {
                         return (
                             <RecipeList
                                 key={item.id}
@@ -173,6 +188,14 @@ export class Home extends Component {
                         );
                     })}
                 </div>
+                <ReactPaginate
+ previousLabel={'prev'}
+ nextLabel={'next'}
+ pageCount={pages}
+ onPageChange={this.handlePageClick}
+ containerClassName={'pagination'}
+ activeClassName={'active'}
+/>
             </div>
 
         );

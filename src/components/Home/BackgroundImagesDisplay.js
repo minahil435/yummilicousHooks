@@ -3,7 +3,6 @@ import React, {Component} from "react";
 export class BackgroundImagesDisplay extends Component {
 
     onHandleEditSubmit = (index,mode) => {
-        console.log(index)
         if (mode && (index > 3)){
             return true
         }
