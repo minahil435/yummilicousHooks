@@ -5,27 +5,16 @@ import "./Nav.css";
 export class Nav extends Component {
 
     render() {
-   
-
         return (
-            
+
             <nav className="Navbar">
-              <div className="h1-logo">
-                <h1>
-                 <Link to="/">Yummilious!</Link>
-                 </h1>
+                <div className="h1-logo">
+                    <h1>
+                        <Link to="/">Yummilious!</Link>
+                    </h1>
                 </div>
                 <div className="right-side-nav">
                     <ul>
-                        {/* <li>
-                            {this.props.user ? (
-                                <NavLink activeClassName="selected" to="/" >
-                                    Saved Item
-                                </NavLink>
-                            ) : (
-                                ""
-                            )}
-                        </li> */}
                         <li>
                             {this.props.user ? (
                                 <NavLink activeClassName="selected" to="/">

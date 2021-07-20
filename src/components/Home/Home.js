@@ -47,8 +47,8 @@ export class Home extends Component {
                     recipeArray: result.data.meals,
                     savedItemSearch: false,
                     page: 0,
-                },()=>{
-                    this.setState({pages: Math.floor(this.state.recipeArray.length / this.state.perPage)})
+                }, () => {
+                    this.setState({ pages: Math.floor(this.state.recipeArray.length / this.state.perPage) })
                 });
             } catch (e) {
                 console.log(e);
@@ -79,8 +79,8 @@ export class Home extends Component {
                     recipeArray: result.data.meals,
                     savedItemSearch: false,
                     page: 0,
-                },()=>{
-                    this.setState({pages: Math.floor(this.state.recipeArray.length / this.state.perPage)})
+                }, () => {
+                    this.setState({ pages: Math.floor(this.state.recipeArray.length / this.state.perPage) })
                 });
 
             } catch (e) {
@@ -91,8 +91,8 @@ export class Home extends Component {
 
     handlePageClick = (event) => {
         let page = event.selected;
-        this.setState({page})
-       }
+        this.setState({ page })
+    }
 
     handleSearchMovie = async (recipeName) => {
         try {
@@ -136,7 +136,7 @@ export class Home extends Component {
     };
 
     render() {
-        const {page, perPage, pages, recipeArray} = this.state;
+        const { page, perPage, pages, recipeArray } = this.state;
         let items = recipeArray.slice(page * perPage, (page + 1) * perPage);
         return (
             <div>
@@ -192,13 +192,13 @@ export class Home extends Component {
                     })}
                 </div>
                 <ReactPaginate
- previousLabel={'prev'}
- nextLabel={'next'}
- pageCount={pages}
- onPageChange={this.handlePageClick}
- containerClassName={'pagination'}
- activeClassName={'active'}
-/>
+                    previousLabel={'prev'}
+                    nextLabel={'next'}
+                    pageCount={pages}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                />
             </div>
 
         );
