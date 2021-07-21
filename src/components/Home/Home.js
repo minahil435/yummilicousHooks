@@ -110,7 +110,10 @@ export class Home extends Component {
             this.setState({
                 searchModeOn: true,
                 recipeArray: recipeData.data.recipes,
-                savedItemSearch: true
+                savedItemSearch: true,
+                page: 0,
+            }, () => {
+                this.setState({ pages: Math.floor(this.state.recipeArray.length / this.state.perPage) })
             });
         } catch (e) {
             console.log(e);
