@@ -157,8 +157,7 @@ export class Home extends Component {
                 </div>
 
                 <div id='background'
-                    style={{ top: this.state.searchModeOn ? "70px" : "" }}
-                >
+                    style={{ top: this.state.searchModeOn ? "70px" : "" }}>
                     <div>
                         <h2 className="whitefontcolor">Find a Recipe</h2>
                     </div>
@@ -191,6 +190,7 @@ export class Home extends Component {
                         );
                     })}
                 </div>
+                <div className={`${(this.state.recipeArray.length === 0)  ? "hide" : ""}`}>
                 <ReactPaginate
                     previousLabel={'prev'}
                     nextLabel={'next'}
@@ -199,6 +199,7 @@ export class Home extends Component {
                     containerClassName={'pagination'}
                     activeClassName={'active'}
                 />
+                </div>
             </div>
 
         );
