@@ -193,7 +193,7 @@ export class Home extends Component {
                         );
                     })}
                 </div>
-                <div className={`${(this.state.recipeArray.length === 0)  ? "hide" : ""}`}>
+                <div className={`${(this.state.recipeArray.length < 5)  ? "hide" : ""}`}>
                 <ReactPaginate
                     previousLabel={'prev'}
                     nextLabel={'next'}
