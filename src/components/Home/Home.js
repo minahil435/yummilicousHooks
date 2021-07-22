@@ -24,6 +24,7 @@ export class Home extends Component {
             "/images/cover2.jpg",
             "/images/cover1.jpg",
             "/images/cover.jpg",
+            
         ],
         recipeName: "",
         recipeArray: [],
