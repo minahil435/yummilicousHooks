@@ -160,6 +160,7 @@ export class RecipeDetail extends Component {
     }
 
     render() {
+        
         return (
             <div id="Maindiv" className=".whitefontcolor">
                 <div id="TopBOX">

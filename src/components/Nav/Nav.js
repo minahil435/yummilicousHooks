@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Nav.css";
+import { FacebookButton, FacebookCount } from "react-social";
 
 export class Nav extends Component {
-
+  
     render() {
         return (
 
@@ -26,6 +27,10 @@ export class Nav extends Component {
                                 </NavLink>
                             )}
                         </li>
+                        <li>
+                        <FacebookButton url={"https://yummilicious.cooking "} appId={"510487530062213"}>
+                        <img id="shareImage" src={"/images/facebook.png"} alt={"share"}/></FacebookButton>
+      </li>
                         <li>
                             {this.props.user ? (
                                 <NavLink

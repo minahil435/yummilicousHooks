@@ -7,6 +7,12 @@
   align-items: center;
   justify-content: space-between; */
 }
+#shareImage{
+  height: 15px;
+  width: 15px;
+  object-fit: cover;
+  background-color:black
+}
 
 .h1-logo {
   padding-top: 20px;

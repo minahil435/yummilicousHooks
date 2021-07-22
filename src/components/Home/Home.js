@@ -7,6 +7,7 @@ import checkIfUserIsAuth from "../utils/checkAuth";
 import Axios from "../utils/Axios"
 import ReactPaginate from 'react-paginate';
 
+
 export class Home extends Component {
     state = {
         BackgroundImages: [
