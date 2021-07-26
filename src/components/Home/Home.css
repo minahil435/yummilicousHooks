@@ -105,3 +105,20 @@ body{
     }
    
 
+    @media screen and (max-width :  600px) {
+        .recipeGrid{
+        grid-template-columns: 1fr;}
+        #recipeInstruction{
+            flex-direction: column;
+            gap:20px;
+        }
+        iframe{
+            height: 200px;
+        }
+        .mobile{
+            height: 0px;
+        }
+        .recipesGrid{
+            grid-template-columns: 1fr;}
+      }
+

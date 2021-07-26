@@ -145,7 +145,7 @@ export class Home extends Component {
         let items = recipeArray.slice(page * perPage, (page + 1) * perPage);
         return (
             <div>
-                <div className={`secondNav" ${checkIfUserIsAuth()} ? "hide" : "" `}>
+                <div className={`secondNav ${(checkIfUserIsAuth()) ? "" : "hide" }`}>
                     <button type="submit" onClick={this.savedItemClicked}>
                         {"Saved Recipes"}</button>
                 </div>

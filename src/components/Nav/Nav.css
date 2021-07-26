@@ -53,5 +53,22 @@ div ul li a {
 .right-side-nav{
   position:absolute; 
   right: 0px;
+}
+
+@media screen and (max-width :  1000px) {
+  div ul li {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    float:inline-end;
+  }
+
+  .h1-logo {
+    padding-top: 20px;
+    position:absolute; 
+    left:0px
+  }
 
 }
+
+

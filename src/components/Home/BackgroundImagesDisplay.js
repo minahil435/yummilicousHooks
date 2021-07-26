@@ -14,7 +14,7 @@ export class BackgroundImagesDisplay extends Component {
         return (
             <div>
                 <img
-                    className={`wallpaper ${this.onHandleEditSubmit(this.props.index, this.props.searchModeOn) ? "hide" : ""}`}
+                    className={`wallpaper ${this.onHandleEditSubmit(this.props.index, this.props.searchModeOn) ? "hide" : ""} ${(this.props.index > 1) ? "mobile" : ""} `}
                     src={this.props.item}
                     alt={this.props.item}
                     height={this.onHandleEditSubmit(this.props.index, this.props.searchModeOn) ? "0" : "230"}
