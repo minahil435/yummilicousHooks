@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
-export class BackgroundImagesDisplay extends Component {
+function BackgroundImagesDisplay (props) {
 
-    onHandleEditSubmit = (index, mode) => {
+
+   function onHandleEditSubmit (index, mode) {
         if (mode && (index > 3)) {
             return true
         }
@@ -10,18 +11,16 @@ export class BackgroundImagesDisplay extends Component {
 
     };
 
-    render() {
         return (
             <div>
                 <img
-                    className={`wallpaper ${this.onHandleEditSubmit(this.props.index, this.props.searchModeOn) ? "hide" : ""} ${(this.props.index > 1) ? "mobile" : ""} `}
-                    src={this.props.item}
-                    alt={this.props.item}
-                    height={this.onHandleEditSubmit(this.props.index, this.props.searchModeOn) ? "0" : "230"}
+                    className={`wallpaper ${onHandleEditSubmit(props.index, props.searchModeOn) ? "hide" : ""} ${(props.index > 1) ? "mobile" : ""} `}
+                    src={props.item}
+                    alt={props.item}
+                    height={onHandleEditSubmit(props.index, props.searchModeOn) ? "0" : "230"}
                 />
             </div>
         )
-    }
 }
 
 export default BackgroundImagesDisplay;

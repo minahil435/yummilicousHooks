@@ -15,14 +15,16 @@ const checkIfUserIsAuth = () => {
 
     if (decodedToken.exp < currentTime) {
       setAxiosAuthToken(null);
-      return false;
+      window.localStorage.removeItem("jwtToken");
+      return null;
     } else {
       setAxiosAuthToken(getJwtToken);
-      return true;
+      return decodedToken.email
     }
-  } else {
-    return false;
   }
-};
+   else {
+    return null;
+  }
+}
 
 export default checkIfUserIsAuth;

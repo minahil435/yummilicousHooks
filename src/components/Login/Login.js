@@ -1,152 +1,133 @@
-import React, { Component } from "react";
+import React, { useState, useContext, useEffect} from "react";
 import { isEmpty, isEmail } from "validator";
 import jwtDecode from "jwt-decode";
 import BackgroundImagesDisplay from "../Home/BackgroundImagesDisplay"
 import { toast } from "react-toastify";
 import Axios from "../utils/Axios";
-import checkIfUserIsAuth from "../utils/checkAuth";
 import setAxiosAuthToken from "../utils/checkAxioAuth";
+import useChangeInputConfig from "../hooks/inputFieldHooks";
+import { AuthContext } from "../../context/AuthContext";
+
 import "./Login.css";
 
-export class Login extends Component {
-  state = {
-    email: "",
-    emailError: "",
-    emailOnFocus: false,
-    password: "",
-    passwordError: "",
-    passwordOnFocus: false,
-    canSubmit: true,
+function Login(props){
 
-    BackgroundImages: [
-      "/images/cover.jpg",
-      "/images/cover1.jpg",
-      "/images/cover2.jpg",
-      "/images/cover3.jpg",
+  const {
+    state: { user}, dispatch
+  } = useContext(AuthContext);
 
-      "/images/cover4.jpg",
-      "/images/cover.jpg",
-      "/images/cover1.jpg",
-      "/images/cover2.jpg",
+  console.log(user)
+
+  const [
+    email,
+    handleEmailChange,
+    isEmailError,
+    emailErrorMessage,
+    emailcanSubmit,
+    emailOnFocus,
+    handleEmailOnFocus
+  ] = useChangeInputConfig("email");
+
+
+  const [
+    password,
+    handlepasswordChange,
+    isPasswordError,
+    passwordErrorMessage,
+    passwordcanSubmit,
+    passwordOnFocus,
+    handlepasswordOnFocus
+  ] = useChangeInputConfig("password");
+
+  const [canSubmit, setCanSubmit] = useState(true);
+
+  const [BackgroundImages, setBackgroundImages] = useState([
+    "/images/cover.jpg",
+    "/images/cover1.jpg",
+    "/images/cover2.jpg",
+    "/images/cover3.jpg",
+
+    "/images/cover4.jpg",
+    "/images/cover.jpg",
+    "/images/cover1.jpg",
+    "/images/cover2.jpg",
+
+    "/images/cover4.jpg",
+    "/images/cover.jpg",
+    "/images/cover1.jpg",
+    "/images/cover2.jpg",
+  ]);
+  
+  useEffect(() => {
+    if (user !== null) {
+      props.history.push("/");
+    }
     
-      "/images/cover4.jpg",
-      "/images/cover.jpg",
-      "/images/cover1.jpg",
-      "/images/cover2.jpg",
-    ],
-  };
-
-  componentDidMount() {
-    let isAuth = checkIfUserIsAuth();
-
-    if (isAuth) {
-      this.props.history.push("/");
-    }
-  }
-
-  handleOnChange = (event) => {
-    this.setState(
-      {
-        [event.target.name]: event.target.value,
-      },
-      () => {
-        if (event.target.name === "email") {
-          if (isEmpty(this.state.email)) {
-            this.setState({
-              emailError: "Email cannot be empty",
-              canSubmit: true,
-            });
-          } else {
-            this.setState({
-              emailError: "",
-            });
-          }
-        }
-
-        if (event.target.name === "password") {
-          if (isEmpty(this.state.password)) {
-            this.setState({
-              passwordError: "Password cannot be empty",
-              canSubmit: true,
-            });
-          } else {
-            this.setState({
-              passwordError: "",
-            });
-          }
-        }
-      }
-    );
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.canSubmit === true) {
-      if (this.state.emailOnFocus && this.state.passwordOnFocus) {
+    if (emailcanSubmit === false && passwordcanSubmit === false) {
+      console.log(canSubmit)
+      if (emailOnFocus && passwordOnFocus) {
         if (
-          this.state.emailError.length === 0 &&
-          this.state.passwordError.length === 0
+          emailErrorMessage.length === 0 &&
+          passwordErrorMessage.length === 0
         ) {
-          this.setState({
-            canSubmit: false,
-          });
+          setCanSubmit(false)
+          console.log(canSubmit)
         }
       }
     }
-  }
-
-  handleInputOnFocus = (event) => {
-    if (!this.state[`${event.target.name}OnFocus`]) {
-      this.setState({
-        [`${event.target.name}OnFocus`]: true,
-      });
+    else{
+      setCanSubmit(true)
     }
-  };
+  }, [emailcanSubmit, passwordcanSubmit]);
 
-  handleOnSubmit = async (event) => {
+
+ async function handleOnSubmit (event) {
     event.preventDefault();
 
     try {
       let result = await Axios.post("/api/user/login", {
-        email: this.state.email,
-        password: this.state.password,
+        email: email,
+        password: password,
       });
 
-      let jwtToken = result.data.payload;
+       let jwtToken = result.data.payload;
+       setAxiosAuthToken(jwtToken);
 
-      console.log(jwtToken);
-      //call setAxiosAuthToken here
-      setAxiosAuthToken(jwtToken);
+       let decodedToken = jwtDecode(jwtToken);
+        dispatch({
+        type: "LOGIN",
+        user: {
+          email: decodedToken.email
+        },
+      });
 
-      let decodedToken = jwtDecode(jwtToken);
-      console.log(decodedToken);
-
-      this.props.handleUserLogin(decodedToken);
-      window.localStorage.setItem("jwtToken", jwtToken);
-      // toast.success("Login success!");
-
-      this.props.history.push("/");
-    } catch (e) {
-      // if (e.response.status === 429) {
-      //   toast.error(e.response.data);
-      // } else {
-      // toast.error(e.response.data.payload);
-      // }
-      console.log(e)
+       window.localStorage.setItem("jwtToken", jwtToken);
+       props.history.push("/");
     }
-  };
 
-  render() {
-    const { email, emailError, password, passwordError, canSubmit } = this.state;
+    //   // toast.success("Login success!");
+
+ 
+    catch (e) {
+      if (e.response.status === 429) {
+        // toast.error(e.response.data);
+      } else {
+      // toast.error(e.response.data.payload);
+      }
+    //   console.log(e)
+    // }
+  }
+}
+
 
     return (
-
       <div>
         <div class="recipeGrid" >
-          {this.state.BackgroundImages.map((item, index) => {
+          {BackgroundImages.map((item, index) => {
             return <BackgroundImagesDisplay
               item={item}
               index={index}
-              thumbnail={this.thumbnailImage}
+              searchModeOn = {false}
             />
           })
           }
@@ -156,7 +137,7 @@ export class Login extends Component {
           <div className="form-text">Login</div>
 
           <div className="form-div">
-            <form className="form" onSubmit={this.handleOnSubmit}>
+            <form className="form" onSubmit={handleOnSubmit}>
               <div className="form-group-block">
                 <div className="block-container">
                   <label htmlFor="email">Email</label>
@@ -166,11 +147,11 @@ export class Login extends Component {
                     placeholder="Email"
                     name="email"
                     value={email}
-                    onChange={this.handleOnChange}
-                    onFocus={this.handleInputOnFocus}
+                    onChange={handleEmailChange}
+                    onFocus={handleEmailOnFocus}
                     autoFocus
                   />
-                  <div className="errorMessage">{emailError && emailError}</div>
+                  <div className="errorMessage">{isEmailError && emailErrorMessage}</div>
                 </div>
               </div>
 
@@ -183,11 +164,11 @@ export class Login extends Component {
                     placeholder="Password"
                     name="password"
                     value={password}
-                    onFocus={this.handleInputOnFocus}
-                    onChange={this.handleOnChange}
+                    onFocus={handlepasswordOnFocus}
+                    onChange={handlepasswordChange}
                   />
                   <div className="errorMessage">
-                    {passwordError && passwordError}
+                    {isPasswordError && passwordErrorMessage}
                   </div>
                 </div>
               </div>
@@ -202,7 +183,6 @@ export class Login extends Component {
         </div>
       </div>
     );
-  }
 }
 
 export default Login;

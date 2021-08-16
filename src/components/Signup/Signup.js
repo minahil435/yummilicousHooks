@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import "./Signup.css";
 import jwtDecode from "jwt-decode";
@@ -8,30 +8,45 @@ import Axios from "../utils/Axios";
 import checkIfUserIsAuth from "../utils/checkAuth";
 import BackgroundImagesDisplay from "../Home/BackgroundImagesDisplay"
 
+import useChangeInputConfig from "../hooks/inputFieldHooks";
+import { AuthContext } from "../../context/AuthContext";
 
-export class Signup extends Component {
-  state = {
-    firstName: "",
-    lastName: "",
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    firstNameError: "",
-    lastNameError: "",
-    usernameError: "",
-    emailError: "",
-    passwordError: "",
-    confirmPasswordError: "",
-    isButtonDisabled: true,
-    firstNameOnFocus: false,
-    lastNameOnFocus: false,
-    emailOnFocus: false,
-    usernameOnFocus: false,
-    passwordOnFocus: false,
-    confirmPasswordOnFocus: false,
 
-    BackgroundImages: [
+function Signup(props) {
+
+  const {
+    state: { user }, dispatch
+  } = useContext(AuthContext);
+
+  const [
+    email,
+    handleEmailChange,
+    isEmailError,
+    emailErrorMessage,
+    ,
+    emailOnFocus,
+    handleEmailOnFocus
+  ] = useChangeInputConfig("email");
+
+
+  const [
+    password,
+    handlepasswordChange,
+    isPasswordError,
+    passwordErrorMessage,
+    ,
+    passwordOnFocus,
+    handlepasswordOnFocus
+  ] = useChangeInputConfig("password");
+
+
+    const [canSubmit, setCanSubmit] = useState(true);
+    
+     const [confirmPassword, setconfirmPassword] = useState("");
+     const [confirmPasswordError, setconfirmPasswordError] = useState("")
+     const [confirmPasswordOnFocus, setconfirmPasswordOnFocus] = useState(false)
+
+    const [BackgroundImages, setBackgroundImages] = useState([
       "/images/cover.jpg",
       "/images/cover1.jpg",
       "/images/cover2.jpg",
@@ -42,253 +57,137 @@ export class Signup extends Component {
       "/images/cover1.jpg",
       "/images/cover2.jpg",
 
-      "/images/cover2.jpg",
+      "/images/cover4.jpg",
       "/images/cover.jpg",
       "/images/cover1.jpg",
-      "/images/cover4.jpg",
-    ],
-  };
+      "/images/cover2.jpg",
+    ]);
+  
 
-  componentDidMount() {
-    let isAuth = checkIfUserIsAuth();
+  useEffect(() => {
+    if (user !== null) {
+      // props.history.push("/");
+    }  
 
-    if (isAuth) {
-      this.props.history.push("/");
+    if (emailOnFocus && passwordOnFocus && confirmPasswordOnFocus ) {
+        if (
+          emailErrorMessage.length === 0 &&
+          passwordErrorMessage.length === 0 &&
+          confirmPasswordError.length === 0 && 
+          email.length !== 0 &&
+          password.length !== 0 &&
+          confirmPassword.length !== 0
+        ) {
+          setCanSubmit(false)
+        }
+        else{
+          setCanSubmit(true)
+        }
+      }
+    else {
+      setCanSubmit(true)
     }
+  }, [emailOnFocus, passwordOnFocus, confirmPasswordOnFocus, emailErrorMessage, passwordErrorMessage, confirmPasswordError]);
+
+  function handleConfirmPasswordInput (e) {
+    let value = e.target.value;
+    setconfirmPassword(value)
+
+    if (password !== e.target.value) {
+
+     setconfirmPasswordError("Password does not match!")
+     
+  
+    } else {
+         setconfirmPasswordError("")
+    }
+  };
+  function handleconfirmPasswordOnFocus(){
+    setconfirmPasswordOnFocus(true)
+
   }
 
-  handleOnChange = (event) => {
-    this.setState(
-      {
-        [event.target.name]: event.target.value,
-      },
-      () => {
-        if (
-          event.target.name === "firstName" ||
-          event.target.name === "lastName"
-        ) {
-          this.handleFirstNameAndLastNameInput(event);
-        }
+  // function  handlePasswordInput  ()  {
+  //   if (confirmPasswordOnFocus) {
+  //     if (password !== confirmPassword) {
+ 
+  //         confirmPasswordError: "Password does not match",
+  //         isButtonDisabled: true,
+  
+  //     } else {
 
-        if (event.target.name === "email") {
-          this.handleEmailInput();
-        }
+  //         confirmPasswordError: "",
+  //     }
+  //   }
 
-        if (event.target.name === "username") {
-          this.handleUsernameInput();
-        }
-        if (event.target.name === "password") {
-          this.handlePasswordInput();
-        }
+  //   if (this.state.password.length === 0) {
+  //     this.setState({
+  //       passwordError: "Password cannot be empty",
+  //       isButtonDisabled: true,
+  //     });
+  //   } else {
+  //     if (isStrongPassword(this.state.password)) {
+  //       this.setState({
+  //         passwordError: "",
+  //       });
+  //     } else {
+  //       this.setState({
+  //         passwordError:
+  //           "Password must contains 1 uppercase, 1 lowercase, 1 special character, 1 number and minimul of 8 charactors long",
+  //         isButtonDisabled: true,
+  //       });
+  //     }
+  //   }
+  // };
 
-        if (event.target.name === "confirmPassword") {
-          this.handleConfirmPasswordInput();
-        }
-      }
-    );
-  };
-
-  handleConfirmPasswordInput = () => {
-    if (this.state.password !== this.state.confirmPassword) {
-      this.setState({
-        confirmPasswordError: "Password does not match!",
-        isButtonDisabled: true,
-      });
-    } else {
-      this.setState({
-        confirmPasswordError: "",
-      });
-    }
-  };
-
-  handlePasswordInput = () => {
-    if (this.state.confirmPasswordOnFocus) {
-      if (this.state.password !== this.state.confirmPassword) {
-        this.setState({
-          confirmPasswordError: "Password does not match",
-          isButtonDisabled: true,
-        });
-      } else {
-        this.setState({
-          confirmPasswordError: "",
-        });
-      }
-    }
-
-    if (this.state.password.length === 0) {
-      this.setState({
-        passwordError: "Password cannot be empty",
-        isButtonDisabled: true,
-      });
-    } else {
-      if (isStrongPassword(this.state.password)) {
-        this.setState({
-          passwordError: "",
-        });
-      } else {
-        this.setState({
-          passwordError:
-            "Password must contains 1 uppercase, 1 lowercase, 1 special character, 1 number and minimul of 8 charactors long",
-          isButtonDisabled: true,
-        });
-      }
-    }
-  };
-
-  handleEmailInput = () => {
-    if (this.state.email.length === 0) {
-      this.setState({
-        emailError: "Email cannot be empty",
-        isButtonDisabled: true,
-      });
-    } else {
-      if (isEmail(this.state.email)) {
-        this.setState({
-          emailError: "",
-        });
-      } else {
-        this.setState({
-          emailError: "Please, enter a valid email!",
-          isButtonDisabled: true,
-        });
-      }
-    }
-  };
-
-  handleFirstNameAndLastNameInput = (event) => {
-    if (this.state[event.target.name].length > 0) {
-      if (isAlpha(this.state[event.target.name])) {
-        this.setState({
-          [`${event.target.name}Error`]: "",
-        });
-      } else {
-        this.setState({
-          [`${event.target.name}Error`]: `${event.target.placeholder} can only have alphabet`,
-          isButtonDisabled: true,
-        });
-      }
-    } else {
-      this.setState({
-        [`${event.target.name}Error`]: `${event.target.placeholder} cannot be empty`,
-        isButtonDisabled: true,
-      });
-    }
-  };
-
-  handleUsernameInput = () => {
-    if (this.state.username.length === 0) {
-      this.setState({
-        usernameError: "Username cannot be empty",
-        isButtonDisabled: true,
-      });
-    } else {
-      if (isAlphanumeric(this.state.username)) {
-        this.setState({
-          usernameError: "",
-        });
-      } else {
-        this.setState({
-          usernameError: "Username can only have alphabet and number",
-          isButtonDisabled: true,
-        });
-      }
-    }
-  };
-
-  handleOnSubmit = async (event) => {
+  async function handleOnSubmit (event){
     event.preventDefault();
 
     try {
       let userInputObj = {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        username: this.state.username,
-        password: this.state.password,
+        firstName: "minahil",
+        lastName: "shafqiue",
+        email: email,
+        username: "minahil435",
+        password: password,
       };
       let success = await axios.post("http://localhost:3001/api/user/sign-up", userInputObj);
       let jwtToken = success.data.payload;
       let decodedToken = jwtDecode(jwtToken);
-      this.props.handleUserLogin(decodedToken);
+
+      dispatch({
+        type: "LOGIN",
+        user: {
+          email: jwtToken.email
+        },
+      });
       window.localStorage.setItem("jwtToken", jwtToken);
 
-      console.log(jwtToken);
-      //toast.success(`${success.data.message}`);
-      this.props.history.push("/");
+    //   //toast.success(`${success.data.message}`);
+        props.history.push("/");
     } catch (e) {
-      // toast.error(`${e.response.data.message}`);
+    //   // toast.error(`${e.response.data.message}`);
       console.log("failed");
     }
   };
 
-  handleOnBlur = (event) => {
-    if (this.state[event.target.name].length === 0) {
-      this.setState({
-        [`${event.target.name}Error`]: `${event.target.placeholder} cannot be empty`,
-      });
-    }
-  };
+  // handleOnBlur = (event) => {
+  //   if (this.state[event.target.name].length === 0) {
+  //     this.setState({
+  //       [`${event.target.name}Error`]: `${event.target.placeholder} cannot be empty`,
+  //     });
+  //   }
+  // };
 
-  componentDidUpdate(prevProps, prevState) {
-
-    if (prevState.isButtonDisabled === true) {
-      if (
-        this.state.firstNameOnFocus &&
-        this.state.lastNameOnFocus &&
-        this.state.emailOnFocus &&
-        this.state.usernameOnFocus &&
-        this.state.passwordOnFocus &&
-        this.state.confirmPasswordOnFocus
-      ) {
-        if (
-          this.state.firstNameError.length === 0 &&
-          this.state.lastNameError.length === 0 &&
-          this.state.usernameError.length === 0 &&
-          this.state.emailError.length === 0 &&
-          this.state.passwordError.length === 0 &&
-          this.state.confirmPasswordError.length === 0 &&
-          this.state.password === this.state.confirmPassword
-        ) {
-          this.setState({
-            isButtonDisabled: false,
-          });
-        }
-      }
-    }
-  }
-
-  handleInputOnFocus = (event) => {
-    if (!this.state[`${event.target.name}OnFocus`]) {
-      this.setState({
-        [`${event.target.name}OnFocus`]: true,
-      });
-    }
-  };
-
-  render() {
-    const {
-      firstName,
-      lastName,
-      username,
-      email,
-      password,
-      confirmPassword,
-      firstNameError,
-      lastNameError,
-      usernameError,
-      emailError,
-      passwordError,
-      confirmPasswordError,
-    } = this.state;
 
     return (
       <div>
         <div class="recipeGrid" >
-          {this.state.BackgroundImages.map((item, index) => {
+          {BackgroundImages.map((item, index) => {
             return <BackgroundImagesDisplay
               item={item}
               index={index}
-              thumbnail={this.thumbnailImage}
+              searchModeOn={false}
             />
           })
           }
@@ -302,44 +201,9 @@ export class Signup extends Component {
           <div className="form-text">Sign up</div>
 
           <div className="form-div">
-            <form className="form" onSubmit={this.handleOnSubmit}>
-              <div className="form-group-inline">
-                <div className="inline-container">
-                  <label htmlFor="firstName">First Name</label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    value={firstName}
-                    placeholder="First Name"
-                    name="firstName"
-                    onChange={this.handleOnChange}
-                    autoFocus
-                    onBlur={this.handleOnBlur}
-                    onFocus={this.handleInputOnFocus}
-                  />
-                  <div className="errorMessage">
-                    {firstNameError && firstNameError}
-                  </div>
-                </div>
-
-                <div className="inline-container">
-                  <label htmlFor="lastName">Last Name</label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    value={lastName}
-                    placeholder="Last Name"
-                    name="lastName"
-                    onChange={this.handleOnChange}
-                    onBlur={this.handleOnBlur}
-                    onFocus={this.handleInputOnFocus}
-                  />
-                  <div className="errorMessage">
-                    {lastNameError && lastNameError}
-                  </div>
-                </div>
-              </div>
-
+            <form className="form" onSubmit={handleOnSubmit}>
+             
+               
               <div className="form-group-block">
                 <div className="block-container">
                   <label htmlFor="email">Email</label>
@@ -348,34 +212,16 @@ export class Signup extends Component {
                     id="email"
                     value={email}
                     placeholder="Email"
-                    onChange={this.handleOnChange}
+                    onChange={handleEmailChange}
                     name="email"
-                    onBlur={this.handleOnBlur}
-                    onFocus={this.handleInputOnFocus}
+                    // onBlur={this.handleOnBlur}
+                    onFocus={handleEmailOnFocus}
                   />
-                  <div className="errorMessage">{emailError && emailError}</div>
+                  <div className="errorMessage">{isEmailError && emailErrorMessage}</div>
                 </div>
               </div>
 
-              <div className="form-group-block">
-                <div className="block-container">
-                  <label htmlFor="username">Username</label>
-                  <input
-                    type="text"
-                    id="username"
-                    value={username}
-                    placeholder="Username"
-                    onChange={this.handleOnChange}
-                    name="username"
-                    onBlur={this.handleOnBlur}
-                    onFocus={this.handleInputOnFocus}
-                  />
-                  <div className="errorMessage">
-                    {usernameError && usernameError}
-                  </div>
-                </div>
-              </div>
-
+  
               <div className="form-group-block">
                 <div className="block-container">
                   <label htmlFor="password">Password</label>
@@ -384,13 +230,13 @@ export class Signup extends Component {
                     id="password"
                     value={password}
                     placeholder="Password"
-                    onChange={this.handleOnChange}
+                    onChange={handlepasswordChange}
                     name="password"
-                    onBlur={this.handleOnBlur}
-                    onFocus={this.handleInputOnFocus}
+                    // onBlur={this.handleOnBlur}
+                    onFocus={handlepasswordOnFocus}
                   />
                   <div className="errorMessage">
-                    {passwordError && passwordError}
+                    {isPasswordError && passwordErrorMessage}
                   </div>
                 </div>
               </div>
@@ -403,19 +249,20 @@ export class Signup extends Component {
                     id="confirmPassword"
                     value={confirmPassword}
                     placeholder="Confirm Password"
-                    onChange={this.handleOnChange}
+                    onChange={handleConfirmPasswordInput}
                     name="confirmPassword"
-                    onBlur={this.handleOnBlur}
-                    onFocus={this.handleInputOnFocus}
+                    // onBlur={this.handleOnBlur}
+                    onFocus={handleconfirmPasswordOnFocus}
                   />
                   <div className="errorMessage">
-                    {confirmPasswordError && confirmPasswordError}
+                    {/* {confirmPasswordError && confirmPasswordError} */}
+                    {confirmPasswordError}
                   </div>
                 </div>
               </div>
 
               <div className="button-container">
-                <button type="submit" disabled={this.state.isButtonDisabled}>
+                <button type="submit" disabled={canSubmit}>
                   Submit
                 </button>
               </div>
@@ -425,6 +272,6 @@ export class Signup extends Component {
       </div>
     );
   }
-}
+
 
 export default Signup;

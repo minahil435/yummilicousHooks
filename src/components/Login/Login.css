@@ -15,6 +15,26 @@ body {
     right: 0;
     margin: auto;
   }
+  .recipeGrid{
+    background-color: black;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+    gap: 5px;
+    position: relative;
+  }
+    .wallpaper{
+    /* height: 230px; */
+    width: 100%;
+    background-repeat: no-repeat;
+    object-fit:cover;
+    opacity: 0.3;
+    transition: height 0.5s linear;
+}
+
+.wallpaper:hover {
+  opacity: 1.0;
+}
+
   
   .form-text {
     text-align: center;
