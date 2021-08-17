@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { useState, useContext, useEffect }from 'react'
 import axios from "axios";
 import "./RecipeDetail.css";
 import Axios from "../utils/Axios"
-import checkIfUserIsAuth from "../utils/checkAuth";
 
-export class RecipeDetail extends Component {
+
+function RecipeDetail() {
     state = {
         strMeal: "",
         strMealThumb: "",

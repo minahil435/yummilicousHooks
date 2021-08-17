@@ -4,22 +4,18 @@ import setAxiosAuthToken from "../components/utils/checkAxioAuth";
 import checkIfUserIsAuth from "../components/utils/checkAuth"
 export const AuthContext = createContext({});
 
-
 const initialState = {
-    user: {
-        email: isUserExits()},
-
+    user: isUserExits()
 };
 
 function isUserExits(){
     if (checkIfUserIsAuth() != null) {
         console.log(checkIfUserIsAuth())
-        return checkIfUserIsAuth()
+        return {email :checkIfUserIsAuth()}
     }
     return null
 }
    
-
 function reducer(state, action) {
     switch (action.type) {
         case "LOGIN":

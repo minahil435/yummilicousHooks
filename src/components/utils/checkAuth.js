@@ -2,10 +2,6 @@ import jwtDecode from "jwt-decode";
 import setAxiosAuthToken from "./checkAxioAuth";
 
 const checkIfUserIsAuth = () => {
-  //check if token exists, if it doesnt exists return false
-  //if it does exists, check if token valid (meaning not expired)
-  //if expired return false
-  //else return true
 
   let getJwtToken = window.localStorage.getItem("jwtToken");
 
@@ -17,12 +13,13 @@ const checkIfUserIsAuth = () => {
       setAxiosAuthToken(null);
       window.localStorage.removeItem("jwtToken");
       return null;
-    } else {
+    }
+    else {
       setAxiosAuthToken(getJwtToken);
       return decodedToken.email
     }
   }
-   else {
+  else {
     return null;
   }
 }

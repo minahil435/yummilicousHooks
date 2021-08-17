@@ -1,13 +1,12 @@
 import React from "react";
 import { Route, Switch ,Redirect } from "react-router-dom";
 import Nav from "./components/Nav/Nav";
-
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 const Login = React.lazy(() => import("./components/Login/Login"));
 const Sigin = React.lazy(() => import("./components/Signup/Signup"));
 const Home = React.lazy(() => import("./components/Home/Home"));
+const RecipeDetail = React.lazy(() => import("./components/Recipe/RecipeDetail"));
 
-// import RecipeDetail from "./components/Recipe/RecipeDetail";
-// import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 function MainRouter() {
 
@@ -28,18 +27,20 @@ function MainRouter() {
         <Route exact 
         path="/" 
         component={Home} />
+
+
+        <PrivateRoute
+          exact
+          path="/recipe-detail/:recipeID"
+          component={RecipeDetail}
+        />
+
       </Switch>
     </>
   );
 };
 
-        {/* <Route
-          exact
-          path="/login"
-          render={(routerProps) => (
-            <Login {...routerProps} handleUserLogin={props.handleUserLogin} />
-          )}
-        />
+       
 
         <PrivateRoute
           exact
@@ -47,7 +48,7 @@ function MainRouter() {
           component={RecipeDetail}
         />
         
-        <Route exact path="/" component={Home}  /> */}
+       
 
       
 

@@ -7,7 +7,6 @@ import Axios from "../utils/Axios"
 import ReactPaginate from 'react-paginate';
 import { AuthContext } from "../../context/AuthContext";
 
-
 function Home() {
     const [BackgroundImages, setBackgroundImages] = useState([
         "/images/cover.jpg",
@@ -58,7 +57,6 @@ function Home() {
                 setSearchModeOn(true)
                 setSavedItemSearch(false)
                 setPage(0)
-                //  why we cant use RecipeArray
                 setPages(Math.floor(recipeData.data.meals.length / perPage))
                 setitems(recipeData.data.meals.slice(page * perPage, (page + 1) * perPage))
             }
@@ -70,11 +68,9 @@ function Home() {
 
     function handleOnChange(event) {
         setRecipeName(event.target.value)
-
     };
 
     async function onSubmit(event) {
-
         if (recipeName === null || recipeName === ' ' || recipeName === '') { }
         else {
             window.sessionStorage.setItem("searchedrecipeName", recipeName);
@@ -84,10 +80,7 @@ function Home() {
 
     function handlePageClick(event) {
         setPage(event.selected)
-        console.log(event.selected)
         let newArray = recipeArray.slice(event.selected * perPage, (event.selected + 1) * perPage)
-        console.log(newArray)
-        //why we didnt use spread operator ?
         setitems(newArray)
     }
 
@@ -111,7 +104,6 @@ function Home() {
             let filteredRecipesArray = recipeArray.filter((item) => {
                 return deletedid !== item._id
             });
-
             setRecipeArray(filteredRecipesArray)
         } catch (e) {
             console.log(e);
@@ -120,7 +112,6 @@ function Home() {
 
 
     return (
-
         <div>
             <div className={`secondNav ${user ? "" : "hide"}`}>
                 <button type="submit" onClick={savedItemClicked}>
@@ -184,9 +175,7 @@ function Home() {
                 />
             </div>
         </div>
-
     );
 }
-
 
 export default Home;
