@@ -5,59 +5,59 @@ import Axios from "../utils/Axios"
 
 
 function RecipeDetail() {
-    state = {
-        strMeal: "",
-        strMealThumb: "",
-        strInstructions: "",
-        strYoutube: "",
-        idMeal: "",
-        alreadyFavorite: false,
-        strIngredient1: "",
-        strIngredient2: "",
-        strIngredient3: "",
-        strIngredient4: "",
-        strIngredient5: "",
-        strIngredient7: "",
-        strIngredient8: "",
-        strIngredient9: "",
-        strIngredient10: "",
-        strIngredient11: "",
-        strIngredient12: "",
-        strIngredient13: "",
-        strIngredient14: "",
-        strIngredient15: "",
-        strIngredient16: "",
-        strIngredient17: "",
-        strIngredient18: "",
-        strIngredient19: "",
-        strIngredient20: "",
+    const [strMeal, setstrMeal] = useState("");
+    const [strMealThumb, setstrMealThumb] = useState("");
+    const [strInstructions, setstrInstructions] = useState("");
+    const [strYoutube, setstrYoutube] = useState("");
+    const [idMeal, setidMeal] = useState("");
+    const [alreadyFavorite, setalreadyFavorite] = useState(false);
 
-        strMeasure1: "",
-        strMeasure2: "",
-        strMeasure3: "",
-        strMeasure4: "",
-        strMeasure5: "",
-        strMeasure6: "",
-        strMeasure7: "",
-        strMeasure8: "",
-        strMeasure9: "",
-        strMeasure10: "",
-        strMeasure11: "",
-        strMeasure12: "",
-        strMeasure13: "",
-        strMeasure14: "",
-        strMeasure15: "",
-        strMeasure16: "",
-        strMeasure17: "",
-        strMeasure18: "",
-        strMeasure19: "",
-        strMeasure20: "",
-    };
+    const [strIngredient1, setstrIngredient1] = useState("");
+    const [strIngredient2 ,setstrIngredient2] = useState("");
+    const [strIngredient3 ,setstrIngredient3] = useState("");
+    const [strIngredient4 ,setstrIngredient4] = useState("");
+    const [strIngredient5 ,setstrIngredient5] = useState("");
+    const [strIngredient6 ,setstrIngredient6] = useState("");
+    const [strIngredient7, setstrIngredient7] = useState("");
+    const [strIngredient8 ,setstrIngredient8] = useState("");
+    const [strIngredient9 ,setstrIngredient9] = useState("");
+    const [strIngredient10, setstrIngredient10] = useState("");
+    const [strIngredient11, setstrIngredient11] = useState("");
+    const [strIngredient12, setstrIngredient12] = useState("");
+    const [strIngredient13, setstrIngredient13] = useState("");
+    const [strIngredient14, setstrIngredient14] = useState("");
+    const [strIngredient15, setstrIngredient15] = useState("");
+    const [strIngredient16, setstrIngredient16] = useState("");
+    const [strIngredient17 ,setstrIngredient17] = useState("");
+    const [strIngredient18 ,setstrIngredient18] = useState("");
+    const [strIngredient19 ,setstrIngredient19] = useState("");
+    const [strIngredient20 ,setstrIngredient20] = useState("");
 
-    async componentDidMount() {
-        this.fetchRecipe();
+    const [strMeasure1, setstrMeasure1] = useState("");
+    const [strMeasure2, setstrMeasure2] = useState("");
+    const [strMeasure3, setstrMeasure3] = useState("");
+    const [strMeasure4, setstrMeasure4] = useState("");
+    const [strMeasure5, setstrMeasure5] = useState("");
+    const [strMeasure6, setstrMeasure6] = useState("");
+    const [strMeasure7, setstrMeasure7] = useState("");
+    const [strMeasure8, setstrMeasure8] = useState("");
+    const [strMeasure9, setstrMeasure9] = useState("");
+    const [strMeasure10, setstrMeasure10] = useState("");
+    const [strMeasure11, setstrMeasure11] = useState("");
+    const [strMeasure12, setstrMeasure12] = useState("");
+    const [strMeasure13, setstrMeasure13] = useState("");
+    const [strMeasure14, setstrMeasure14] = useState("");
+    const [strMeasure15, setstrMeasure15] = useState("");
+    const [strMeasure16, setstrMeasure16] = useState("");
+    const [strMeasure17, setstrMeasure17] = useState("");
+    const [strMeasure18, setstrMeasure18] = useState("");
+    const [strMeasure19, setstrMeasure19] = useState("");
+    const [strMeasure20, setstrMeasure20] = useState("");
 
-    }
+    // async componentDidMount() {
+    //     this.fetchRecipe();
+
+    // }
 
     fetchRecipe = async () => {
         try {
@@ -159,7 +159,7 @@ function RecipeDetail() {
         else { this.props.history.push("/sign-up") }
     }
 
-    render() {
+
         
         return (
             <div id="Maindiv" className=".whitefontcolor">
@@ -244,7 +244,7 @@ function RecipeDetail() {
             </div>
         )
     }
-}
+
 
 export default RecipeDetail
 
