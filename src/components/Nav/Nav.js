@@ -26,16 +26,20 @@ function Nav() {
             <div className="right-side-nav">
                 <ul>
                     <li>
+                        {user ? (<img id="recipeImage" src={"http://localhost:3001/" + user.userImage} alt={"userPicture"} />) : (<img id="recipeImage" src={"/images/usericon.png"} alt={"userPicture"} />)}
+                    </li>
+                    <li>
                         {user ? (
                             <NavLink activeClassName="selected" to="/">
-                                Welcome Back - {user.email}
+                                {user.email}
                             </NavLink>
                         ) : (
-                            <NavLink activeClassName="selected" to="/sign-up">
+                                <NavLink activeClassName="selected" to="/signup">
                                 Sign up
                             </NavLink>
                         )}
                     </li>
+                    
                     <li>
                         <FacebookButton url={"https://yummilicious.cooking "} appId={"510487530062213"}>
                             <img id="shareImage" src={"/images/facebook.png"} alt={"share"} /></FacebookButton>
@@ -58,14 +62,6 @@ function Nav() {
                             </NavLink>
                         )}
                     </li>
-                    {user ? (
-                        <div><img id="recipeImage" src={user.userImage} alt={"userPicture"}
-                        /></div>
-                    ): (
-                            <div><img id="recipeImage" src={"/images/cover.jpg"} alt={"/images/cover.jpg"}
-                            /></div>
-                    )}
-                    
                 </ul>
             </div>
         </nav>

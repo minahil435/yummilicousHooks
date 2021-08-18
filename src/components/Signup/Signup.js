@@ -5,8 +5,9 @@ import jwtDecode from "jwt-decode";
 import { isAlpha, isEmail, isAlphanumeric, isStrongPassword } from "validator";
 import { toast } from "react-toastify";
 import Axios from "../utils/Axios";
-import checkIfUserIsAuth from "../utils/checkAuth";
+
 import BackgroundImagesDisplay from "../Home/BackgroundImagesDisplay"
+import setAxiosAuthToken from "../utils/checkAxioAuth";
 
 import useChangeInputConfig from "../hooks/inputFieldHooks";
 import { AuthContext } from "../../context/AuthContext";
@@ -68,7 +69,7 @@ function Signup(props) {
 
   useEffect(() => {
     if (user !== null) {
-      // props.history.push("/");
+      props.history.push("/");
     }  
 
     if (emailOnFocus && passwordOnFocus && confirmPasswordOnFocus ) {
@@ -97,23 +98,20 @@ function Signup(props) {
 
   };
 
-  function onFileUpload () {
+  // function onFileUpload () {
 
-    // Create an object of formData
-    const formData = new FormData();
+  //   // Create an object of formData
+  //   const formData = new FormData();
 
-    formData.append(
-      "myFile",
-      selectedFile,
-      selectedFile.name
-    );
+  //   formData.append(
+  //     "userImage",
+  //     selectedFile,
+  //     selectedFile.name
+  //   );
+   
+  //   return formData
+  // };
 
-    console.log(selectedFile);
-
-    // Request made to the backend api
-    // Send formData object
-    // axios.post("api/uploadfile", formData);
-  };
   function handleConfirmPasswordInput (e) {
     let value = e.target.value;
     setconfirmPassword(value)
@@ -167,28 +165,31 @@ function Signup(props) {
 
   async function handleOnSubmit (event){
     event.preventDefault();
+    try{
+    const formData = new FormData();
 
-    try {
-      let userInputObj = {
-        email: email,
-        password: password,
-      };
-      let success = await axios.post("http://localhost:3001/api/user/sign-up", userInputObj);
-      let jwtToken = success.data.payload;
-      let decodedToken = jwtDecode(jwtToken);
+    formData.append("userImage",selectedFile);
+    formData.append("email", email);
+    formData.append("password", password);
 
+    let success = await axios.post("http://localhost:3001/api/user/sign-up", formData);
+    let jwtToken = success.data.payload;
+    setAxiosAuthToken(jwtToken);
+    let decodedToken = jwtDecode(jwtToken);
+     
       dispatch({
         type: "LOGIN",
         user: {
-          email: jwtToken.email
+          email: decodedToken.email,
+          userImage: decodedToken.userImage
         },
       });
       window.localStorage.setItem("jwtToken", jwtToken);
 
-    //   //toast.success(`${success.data.message}`);
+      //toast.success(`${success.data.message}`);
         props.history.push("/");
     } catch (e) {
-    //   // toast.error(`${e.response.data.message}`);
+      // toast.error(`${e.response.data.message}`);
       console.log("failed");
     }
   };
@@ -242,12 +243,6 @@ function Signup(props) {
                   <div className="errorMessage">{isEmailError && emailErrorMessage}</div>
                 </div>
               </div>
-
-              <input type="file" onChange={onFileChange} />
-              <button onClick={onFileUpload}>
-                Upload! </button>
-
-  
               <div className="form-group-block">
                 <div className="block-container">
                   <label htmlFor="password">Password</label>
@@ -285,6 +280,11 @@ function Signup(props) {
                     {confirmPasswordError}
                   </div>
                 </div>
+              </div>
+              <div className="form-group-block">
+                <div className="block-container">
+              <input type="file" onChange={onFileChange} />
+              </div>
               </div>
 
               <div className="button-container">

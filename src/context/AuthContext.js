@@ -7,11 +7,14 @@ export const AuthContext = createContext({});
 const initialState = {
     user: isUserExits()
 };
+console.log(initialState.user)
 
+console.log(initialState.user)
 function isUserExits(){
     if (checkIfUserIsAuth() != null) {
         console.log(checkIfUserIsAuth())
-        return {email :checkIfUserIsAuth()}
+        return {email :checkIfUserIsAuth().email,
+            userImage: checkIfUserIsAuth().userImage}
     }
     return null
 }
@@ -21,7 +24,8 @@ function reducer(state, action) {
         case "LOGIN":
             return {
                 user: {
-                    email: action.user.email
+                    email: action.user.email,
+                    userImage: action.user.userImage
                 },
             };
         case "LOG_OUT":

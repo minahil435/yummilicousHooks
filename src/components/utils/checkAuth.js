@@ -16,7 +16,7 @@ const checkIfUserIsAuth = () => {
     }
     else {
       setAxiosAuthToken(getJwtToken);
-      return decodedToken.email
+      return decodedToken
     }
   }
   else {

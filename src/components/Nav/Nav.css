@@ -1,6 +1,5 @@
-
 .Navbar {
-  height: 75px;
+  height: 70px;
   background-color: black;
   color: white;
   /* display: flex;
@@ -12,6 +11,14 @@
   width: 15px;
   object-fit: cover;
   background-color:black
+}
+  #recipeImage{
+    border: black 1px solid;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    object-fit:cover;
+    vertical-align: middle;
 }
 
 .h1-logo {

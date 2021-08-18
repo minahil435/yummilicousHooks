@@ -41,10 +41,10 @@ function Home() {
     } = useContext(AuthContext);
 
     useEffect(() => {
-        let searchedMovieTitle = window.sessionStorage.getItem("searchedrecipeName");
-        if (searchedMovieTitle) {
-            handleSearchMovie()
-        }
+        // let searchedMovieTitle = window.sessionStorage.getItem("searchedrecipeName");
+        // if (searchedMovieTitle) {
+        //     handleSearchMovie()
+        // }
 
     }, [])
 
@@ -91,7 +91,8 @@ function Home() {
             setRecipeArray(recipeData.data.recipes)
             setSavedItemSearch(true)
             setPage(0)
-            setPages(Math.floor(recipeArray.length / perPage))
+            setPages(Math.floor(recipeData.data.recipes.length / perPage))
+            setitems(recipeData.data.recipes.slice(page * perPage, (page + 1) * perPage))
         } catch (e) {
             console.log(e);
         }
