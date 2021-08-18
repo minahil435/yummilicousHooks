@@ -89,15 +89,18 @@ function Login(props){
         email: email,
         password: password,
       });
+       
 
        let jwtToken = result.data.payload;
        setAxiosAuthToken(jwtToken);
-
+    
        let decodedToken = jwtDecode(jwtToken);
         dispatch({
         type: "LOGIN",
         user: {
-          email: decodedToken.email
+          email: decodedToken.email,
+          userImage: decodedToken.userImage
+          
         },
       });
 
@@ -105,15 +108,15 @@ function Login(props){
        props.history.push("/");
     }
 
-    //   // toast.success("Login success!");
+      // toast.success("Login success!");
 
  
     catch (e) {
-      if (e.response.status === 429) {
-        // toast.error(e.response.data);
-      } else {
+      // if (e.response.status === 429) {
+        console.log(e)
+      // } else {
       // toast.error(e.response.data.payload);
-      }
+      // }
     //   console.log(e)
     // }
   }

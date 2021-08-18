@@ -64,7 +64,7 @@ function RecipeDetail(props) {
 
     }, [])
 
-    fetchRecipe = async () => {
+    const fetchRecipe = async () => {
         try {
             let result = await axios.get(
                 `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${props.match.params.recipeID}`
@@ -84,7 +84,7 @@ function RecipeDetail(props) {
 
             setstrIngredient1(result.data.meals[0].strIngredient1)
             setstrIngredient2(result.data.meals[0].strIngredient2)
-            setstrIngredient3r(result.data.meals[0].strIngredient3)
+            setstrIngredient3(result.data.meals[0].strIngredient3)
             setstrIngredient4(result.data.meals[0].strIngredient4)
             setstrIngredient5(result.data.meals[0].strIngredient5)
             setstrIngredient6(result.data.meals[0].strIngredient6)

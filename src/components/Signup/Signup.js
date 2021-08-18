@@ -46,6 +46,8 @@ function Signup(props) {
      const [confirmPasswordError, setconfirmPasswordError] = useState("")
      const [confirmPasswordOnFocus, setconfirmPasswordOnFocus] = useState(false)
 
+     const [selectedFile, setselectedFile] = useState(null)
+
     const [BackgroundImages, setBackgroundImages] = useState([
       "/images/cover.jpg",
       "/images/cover1.jpg",
@@ -89,6 +91,29 @@ function Signup(props) {
     }
   }, [emailOnFocus, passwordOnFocus, confirmPasswordOnFocus, emailErrorMessage, passwordErrorMessage, confirmPasswordError]);
 
+
+  function onFileChange (event) {
+    setselectedFile(event.target.files[0]);
+
+  };
+
+  function onFileUpload () {
+
+    // Create an object of formData
+    const formData = new FormData();
+
+    formData.append(
+      "myFile",
+      selectedFile,
+      selectedFile.name
+    );
+
+    console.log(selectedFile);
+
+    // Request made to the backend api
+    // Send formData object
+    // axios.post("api/uploadfile", formData);
+  };
   function handleConfirmPasswordInput (e) {
     let value = e.target.value;
     setconfirmPassword(value)
@@ -145,10 +170,7 @@ function Signup(props) {
 
     try {
       let userInputObj = {
-        firstName: "minahil",
-        lastName: "shafqiue",
         email: email,
-        username: "minahil435",
         password: password,
       };
       let success = await axios.post("http://localhost:3001/api/user/sign-up", userInputObj);
@@ -220,6 +242,10 @@ function Signup(props) {
                   <div className="errorMessage">{isEmailError && emailErrorMessage}</div>
                 </div>
               </div>
+
+              <input type="file" onChange={onFileChange} />
+              <button onClick={onFileUpload}>
+                Upload! </button>
 
   
               <div className="form-group-block">

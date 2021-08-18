@@ -58,6 +58,14 @@ function Nav() {
                             </NavLink>
                         )}
                     </li>
+                    {user ? (
+                        <div><img id="recipeImage" src={user.userImage} alt={"userPicture"}
+                        /></div>
+                    ): (
+                            <div><img id="recipeImage" src={"/images/cover.jpg"} alt={"/images/cover.jpg"}
+                            /></div>
+                    )}
+                    
                 </ul>
             </div>
         </nav>
