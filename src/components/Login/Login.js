@@ -1,8 +1,6 @@
 import React, { useState, useContext, useEffect} from "react";
-import { isEmpty, isEmail } from "validator";
 import jwtDecode from "jwt-decode";
 import BackgroundImagesDisplay from "../Home/BackgroundImagesDisplay"
-import { toast } from "react-toastify";
 import Axios from "../utils/Axios";
 import setAxiosAuthToken from "../utils/checkAxioAuth";
 import useChangeInputConfig from "../hooks/inputFieldHooks";
@@ -41,7 +39,7 @@ function Login(props){
 
   const [canSubmit, setCanSubmit] = useState(true);
 
-  const [BackgroundImages, setBackgroundImages] = useState([
+  const BackgroundImages = [
     "/images/cover.jpg",
     "/images/cover1.jpg",
     "/images/cover2.jpg",
@@ -56,7 +54,7 @@ function Login(props){
     "/images/cover.jpg",
     "/images/cover1.jpg",
     "/images/cover2.jpg",
-  ]);
+  ];
   
   useEffect(() => {
     if (user !== null) {
@@ -128,6 +126,7 @@ function Login(props){
         <div class="recipeGrid" >
           {BackgroundImages.map((item, index) => {
             return <BackgroundImagesDisplay
+              key={item.id}
               item={item}
               index={index}
               searchModeOn = {false}

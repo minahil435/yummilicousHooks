@@ -1,11 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import AuthContextWrapper from "./context/AuthContext";
 import Spinner from "./components/Spinner/Spinner"
 import MainRouter from "./MainRouter";
-
-import "./App.css";
-
 
 function App() {
   return (
@@ -17,6 +14,6 @@ function App() {
       </Router>
     </React.Suspense>
   );
-  }
+}
 
 export default App;

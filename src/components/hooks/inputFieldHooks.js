@@ -5,7 +5,6 @@ function useChangeInputConfig(inputType) {
     const [value, setValue] = useState("");
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
     const [isDisabled, setIsDisabled] = useState(true);
     const [OnFocus, setOnFocus] = useState(false);
 
@@ -14,11 +13,7 @@ function useChangeInputConfig(inputType) {
         setValue(value);
         checkInput(value);
     }
-
-    function clearInput() {
-        setValue("");
-    }
-
+    
     function handleInputOnFocus() {
         setOnFocus(true)
     };

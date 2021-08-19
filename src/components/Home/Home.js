@@ -8,7 +8,7 @@ import ReactPaginate from 'react-paginate';
 import { AuthContext } from "../../context/AuthContext";
 
 function Home() {
-    const [BackgroundImages, setBackgroundImages] = useState([
+    const BackgroundImages = [
         "/images/cover.jpg",
         "/images/cover1.jpg",
         "/images/cover2.jpg",
@@ -23,29 +23,27 @@ function Home() {
         "/images/cover.jpg",
         "/images/cover1.jpg",
         "/images/cover2.jpg",
-    ]);
+    ];
 
     const [recipeName, setRecipeName] = useState("");
     const [recipeArray, setRecipeArray] = useState([]);
     const [searchModeOn, setSearchModeOn] = useState(false);
     const [savedItemSearch, setSavedItemSearch] = useState(false);
-    const [perPage, setPerPage] = useState(4);
     const [page, setPage] = useState(0);
     const [pages, setPages] = useState(0);
-
-    const [items, setitems] = useState([]);
+    const [items, setItems] = useState([]);
     const url = "https://www.themealdb.com/api/json/v1/1/search.php?s="
+    const perPage = 4
 
     const {
         state: { user }
     } = useContext(AuthContext);
 
     useEffect(() => {
-        // let searchedMovieTitle = window.sessionStorage.getItem("searchedrecipeName");
-        // if (searchedMovieTitle) {
-        //     handleSearchMovie()
-        // }
-
+        let searchedMovieTitle = window.sessionStorage.getItem("searchedrecipeName");
+        if (searchedMovieTitle) {
+            handleSearchMovie()
+        }
     }, [])
 
     const handleSearchMovie = async () => {
@@ -58,7 +56,7 @@ function Home() {
                 setSavedItemSearch(false)
                 setPage(0)
                 setPages(Math.floor(recipeData.data.meals.length / perPage))
-                setitems(recipeData.data.meals.slice(page * perPage, (page + 1) * perPage))
+                setItems(recipeData.data.meals.slice(page * perPage, (page + 1) * perPage))
             }
             catch (e) {
                 return e;
@@ -81,7 +79,7 @@ function Home() {
     function handlePageClick(event) {
         setPage(event.selected)
         let newArray = recipeArray.slice(event.selected * perPage, (event.selected + 1) * perPage)
-        setitems(newArray)
+        setItems(newArray)
     }
 
     async function savedItemClicked() {
@@ -92,7 +90,7 @@ function Home() {
             setSavedItemSearch(true)
             setPage(0)
             setPages(Math.floor(recipeData.data.recipes.length / perPage))
-            setitems(recipeData.data.recipes.slice(page * perPage, (page + 1) * perPage))
+            setItems(recipeData.data.recipes.slice(page * perPage, (page + 1) * perPage))
         } catch (e) {
             console.log(e);
         }
@@ -106,6 +104,8 @@ function Home() {
                 return deletedid !== item._id
             });
             setRecipeArray(filteredRecipesArray)
+            setPages(Math.floor(filteredRecipesArray.length / perPage))
+            setItems(filteredRecipesArray.slice(page * perPage, (page + 1) * perPage))
         } catch (e) {
             console.log(e);
         }
@@ -129,7 +129,6 @@ function Home() {
                 })
                 }
             </div>
-
             <div id='background'
                 style={{ top: searchModeOn ? "70px" : "" }}>
                 <div>

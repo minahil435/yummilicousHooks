@@ -1,4 +1,3 @@
-import axios from "axios";
 import Axios from "./Axios";
 
 const setAxiosAuthToken = (jwtToken) => {

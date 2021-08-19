@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Nav.css";
 import { AuthContext } from "../../context/AuthContext";
@@ -26,7 +26,7 @@ function Nav() {
             <div className="right-side-nav">
                 <ul>
                     <li>
-                        {user ? (<img id="shareImage" src={"http://localhost:3001/" + user.userImage} alt={"userPicture"} />) : (<img id="shareImage" src={"/images/usericon.png"} alt={"userPicture"} />)}
+                        {user ? (<img id="userImage" src={"http://localhost:3001/" + user.userImage} alt={"userPicture"} />) : (<img id="userImage" src={"/images/usericon.png"} alt={"userPicture"} />)}
                     </li>
                     <li>
                         {user ? (

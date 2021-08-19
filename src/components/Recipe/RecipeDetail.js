@@ -54,7 +54,7 @@ function RecipeDetail(props) {
     const [strMeasure18, setstrMeasure18] = useState("");
     const [strMeasure19, setstrMeasure19] = useState("");
     const [strMeasure20, setstrMeasure20] = useState("");
-  
+
     const {
         state: { user }
     } = useContext(AuthContext);
@@ -103,17 +103,17 @@ function RecipeDetail(props) {
             setstrIngredient19(result.data.meals[0].strIngredient19)
             setstrIngredient20(result.data.meals[0].strIngredient20)
 
-            setstrMeasure1( result.data.meals[0].strMeasure1)
-            setstrMeasure2( result.data.meals[0].strMeasure2)
-            setstrMeasure3( result.data.meals[0].strMeasure3)
-            setstrMeasure4( result.data.meals[0].strMeasure4)
-            setstrMeasure5( result.data.meals[0].strMeasure5)
+            setstrMeasure1(result.data.meals[0].strMeasure1)
+            setstrMeasure2(result.data.meals[0].strMeasure2)
+            setstrMeasure3(result.data.meals[0].strMeasure3)
+            setstrMeasure4(result.data.meals[0].strMeasure4)
+            setstrMeasure5(result.data.meals[0].strMeasure5)
             setstrMeasure6(result.data.meals[0].strMeasure6)
-            setstrMeasure7( result.data.meals[0].strMeasure7)
+            setstrMeasure7(result.data.meals[0].strMeasure7)
             setstrMeasure8(result.data.meals[0].strMeasure8)
-            setstrMeasure9( result.data.meals[0].strMeasure9)
+            setstrMeasure9(result.data.meals[0].strMeasure9)
             setstrMeasure10(result.data.meals[0].strMeasure10)
-            setstrMeasure11( result.data.meals[0].strMeasure11)
+            setstrMeasure11(result.data.meals[0].strMeasure11)
             setstrMeasure12(result.data.meals[0].strMeasure12)
             setstrMeasure13(result.data.meals[0].strMeasure13)
             setstrMeasure14(result.data.meals[0].strMeasure14)
@@ -125,7 +125,7 @@ function RecipeDetail(props) {
             setstrMeasure20(result.data.meals[0].strMeasure20)
 
             let link = result.data.meals[0].strYoutube.split("watch?v=")[1]
-            setstrYoutube("https://www.youtube.com/embed/" + link) 
+            setstrYoutube("https://www.youtube.com/embed/" + link)
         }
         catch (e) {
             console.log(e);
@@ -148,8 +148,6 @@ function RecipeDetail(props) {
         }
         else { this.props.history.push("/sign-up") }
     }
-
-
 
     return (
         <div id="Maindiv" className=".whitefontcolor">
@@ -234,7 +232,6 @@ function RecipeDetail(props) {
         </div>
     )
 }
-
 
 export default RecipeDetail
 

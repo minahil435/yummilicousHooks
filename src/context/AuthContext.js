@@ -1,5 +1,4 @@
 import { createContext, useReducer } from "react";
-import jwtDecode from "jwt-decode";
 import setAxiosAuthToken from "../components/utils/checkAxioAuth";
 import checkIfUserIsAuth from "../components/utils/checkAuth"
 export const AuthContext = createContext({});
@@ -7,18 +6,17 @@ export const AuthContext = createContext({});
 const initialState = {
     user: isUserExits()
 };
-console.log(initialState.user)
 
-console.log(initialState.user)
-function isUserExits(){
+function isUserExits() {
     if (checkIfUserIsAuth() != null) {
-        console.log(checkIfUserIsAuth())
-        return {email :checkIfUserIsAuth().email,
-            userImage: checkIfUserIsAuth().userImage}
+        return {
+            email: checkIfUserIsAuth().email,
+            userImage: checkIfUserIsAuth().userImage
+        }
     }
     return null
 }
-   
+
 function reducer(state, action) {
     switch (action.type) {
         case "LOGIN":
@@ -34,7 +32,6 @@ function reducer(state, action) {
             return {
                 user: null,
             };
-        
         default:
             return state;
     }
@@ -42,7 +39,6 @@ function reducer(state, action) {
 
 function AuthContextWrapper({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState);
-
     return (
         <AuthContext.Provider value={{ state, dispatch }}>
             {children}

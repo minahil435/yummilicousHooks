@@ -7,7 +7,6 @@ import setAxiosAuthToken from "../utils/checkAxioAuth";
 import useChangeInputConfig from "../hooks/inputFieldHooks";
 import { AuthContext } from "../../context/AuthContext";
 
-
 function Signup(props) {
   const {
     state: { user }, dispatch
@@ -35,14 +34,12 @@ function Signup(props) {
 
 
   const [canSubmit, setCanSubmit] = useState(true);
-
   const [confirmPassword, setconfirmPassword] = useState("");
   const [confirmPasswordError, setconfirmPasswordError] = useState("")
   const [confirmPasswordOnFocus, setconfirmPasswordOnFocus] = useState(false)
-
   const [selectedFile, setselectedFile] = useState(null)
 
-  const [BackgroundImages, setBackgroundImages] = useState([
+  const BackgroundImages = [
     "/images/cover.jpg",
     "/images/cover1.jpg",
     "/images/cover2.jpg",
@@ -57,7 +54,7 @@ function Signup(props) {
     "/images/cover.jpg",
     "/images/cover1.jpg",
     "/images/cover2.jpg",
-  ]);
+  ]
 
 
   useEffect(() => {
@@ -88,7 +85,6 @@ function Signup(props) {
 
   function onFileChange(event) {
     setselectedFile(event.target.files[0]);
-
   };
 
   function handleConfirmPasswordInput(e) {
@@ -96,7 +92,6 @@ function Signup(props) {
     setconfirmPassword(value)
 
     if (password !== e.target.value) {
-    
       setconfirmPasswordError("Password does not match!")
     } else {
       setconfirmPasswordError("")
@@ -148,9 +143,10 @@ function Signup(props) {
 
   return (
     <div>
-      <div class="recipeGrid" >
+      <div className="recipeGrid" >
         {BackgroundImages.map((item, index) => {
           return <BackgroundImagesDisplay
+            key={item.id}
             item={item}
             index={index}
             searchModeOn={false}
@@ -158,7 +154,7 @@ function Signup(props) {
         })
         }
       </div>
-      <div class="welcomeDiv">
+      <div className="welcomeDiv">
         {"Sign up and make dinner that perfectly fits your life"}
       </div>
       <div className="container">
@@ -234,6 +230,5 @@ function Signup(props) {
     </div>
   );
 }
-
 
 export default Signup;
