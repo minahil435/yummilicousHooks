@@ -9,18 +9,20 @@
     background-size: cover;
   }
 
-  #recipeImage{
+#recipeImage{
     border: black 1px solid;
     border-radius: 50%;
     height: 100px;
     width: 100px;
 }
+
 iframe{
   height: 400px;
   width: 70%;
   align-self: center;
   background-color: black;
 }
+
 #recipeInstruction{
   width: 90%;
   height: 80%;
@@ -29,12 +31,14 @@ iframe{
   justify-content:start;
   gap: 100px;
 }
+
 #Yummilicious{
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-  .hide{
+
+.hide{
       visibility: hidden;
   }
  
