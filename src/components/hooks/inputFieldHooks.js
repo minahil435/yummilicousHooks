@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { isEmail, isStrongPassword } from "validator";
 
 function useChangeInputConfig(inputType) {
     const [value, setValue] = useState("");
@@ -28,7 +29,33 @@ function useChangeInputConfig(inputType) {
             setIsError(true);
             setErrorMessage(`${inputType} is required`);
             setIsDisabled(true);
-        } else {
+        }
+        else if (inputType === "email") {
+            if (!isEmail(value)) {
+                console.log()
+                setIsError(true);
+                setErrorMessage(`Not a correct email format`);
+                setIsDisabled(true);
+            }
+            else {
+                setIsError(false);
+                setErrorMessage(``);
+                setIsDisabled(false);
+            }
+        }
+        else if (inputType === "password") {
+            if (!isStrongPassword(value)) {
+                setIsError(true);
+                setErrorMessage("Password must contains 1 uppercase, 1 lowercase, 1 special character, 1 number and minimul of 8 charactors long");
+                setIsDisabled(true);
+            }
+            else {
+                setIsError(false);
+                setErrorMessage(``);
+                setIsDisabled(false);
+            }
+        }
+        else {
             setIsError(false);
             setErrorMessage(``);
             setIsDisabled(false);

@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import "./Signup.css";
 import jwtDecode from "jwt-decode";
-import { isAlpha, isEmail, isAlphanumeric, isStrongPassword } from "validator";
 import { toast } from "react-toastify";
 import Axios from "../utils/Axios";
 
@@ -97,20 +96,6 @@ function Signup(props) {
     setselectedFile(event.target.files[0]);
 
   };
-
-  // function onFileUpload () {
-
-  //   // Create an object of formData
-  //   const formData = new FormData();
-
-  //   formData.append(
-  //     "userImage",
-  //     selectedFile,
-  //     selectedFile.name
-  //   );
-   
-  //   return formData
-  // };
 
   function handleConfirmPasswordInput (e) {
     let value = e.target.value;
