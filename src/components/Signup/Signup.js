@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import Axios from "../utils/Axios"
 import "./Signup.css";
 import jwtDecode from "jwt-decode";
 import BackgroundImagesDisplay from "../Home/BackgroundImagesDisplay"
@@ -104,14 +105,14 @@ function Signup(props) {
 
   async function handleOnSubmit(event) {
     event.preventDefault();
-
     try {
       const formData = new FormData();
       formData.append("userImage", selectedFile);
       formData.append("email", email);
       formData.append("password", password);
+      
 
-      let success = await axios.post("http://localhost:3001/api/user/sign-up", formData);
+      let success = await Axios.post("/api/user/sign-up", formData);
       let jwtToken = success.data.payload;
       setAxiosAuthToken(jwtToken);
 

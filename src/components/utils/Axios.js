@@ -1,10 +1,9 @@
 import axios from "axios";
+require("dotenv").config()
 
 const Axios = axios.create({
   baseURL:
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3001"
-      : "deploy CLOUD ADDRESS",
+    process.env.REACT_APP_NODE_FORM,
   timeout: 50000,
 });
 

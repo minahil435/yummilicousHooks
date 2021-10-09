@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect} from "react";
 import jwtDecode from "jwt-decode";
 import BackgroundImagesDisplay from "../Home/BackgroundImagesDisplay"
 import Axios from "../utils/Axios";
+import axios from "axios";
 import setAxiosAuthToken from "../utils/checkAxioAuth";
 import useChangeInputConfig from "../hooks/inputFieldHooks";
 import { AuthContext } from "../../context/AuthContext";
