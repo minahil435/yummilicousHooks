@@ -181,7 +181,7 @@ function Signup(props) {
               <div className="block-container">
                 <label htmlFor="password">Password</label>
                 <input
-                  type="text"
+                  type="password"
                   id="password"
                   value={password}
                   placeholder="Password"
@@ -199,7 +199,7 @@ function Signup(props) {
               <div className="block-container">
                 <label htmlFor="confirmPassword">Confirm Password</label>
                 <input
-                  type="text"
+                  type="password"
                   id="confirmPassword"
                   value={confirmPassword}
                   placeholder="Confirm Password"
