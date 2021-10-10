@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import "./Nav.css";
 import { AuthContext } from "../../context/AuthContext";
 import { FacebookButton } from "react-social";
+require("dotenv").config()
 
 function Nav() {
     const {
@@ -26,7 +27,7 @@ function Nav() {
             <div className="right-side-nav">
                 <ul>
                     <li>
-                        {user ? (<img id="userImage" src={"http://localhost:3001/" + user.userImage} alt={"userPicture"} />) : (<img id="userImage" src={"/images/usericon.png"} alt={"userPicture"} />)}
+                        {user ? (<img id="userImage" src={process.env.REACT_APP_PICTURES + user.userImage} alt={"userPicture"} />) : (<img id="userImage" src={"/images/usericon.png"} alt={"userPicture"} />)}
                     </li>
                     <li>
                         {user ? (
